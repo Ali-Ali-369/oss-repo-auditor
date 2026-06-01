@@ -21,6 +21,12 @@ def build_parser() -> argparse.ArgumentParser:
         default="markdown",
         help="Report format.",
     )
+    parser.add_argument(
+        "--fail-under",
+        type=int,
+        metavar="SCORE",
+        help="Exit with status 2 if the audit score is below this threshold.",
+    )
     return parser
 
 
@@ -35,4 +41,6 @@ def main(argv: list[str] | None = None, stdout: TextIO | None = None) -> int:
     report = audit_repository(args.path)
     rendered = render_json(report) if args.format == "json" else render_markdown(report)
     out.write(rendered)
+    if args.fail_under is not None and report.score < args.fail_under:
+        return 2
     return 0

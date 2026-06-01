@@ -26,7 +26,11 @@ No runtime dependencies are required beyond Python 3.11+.
 ```bash
 python -m oss_repo_auditor .
 python -m oss_repo_auditor . --format json
+python -m oss_repo_auditor . --fail-under 80
 ```
+
+`--fail-under` is useful in CI when a project wants to enforce a minimum
+repository readiness score.
 
 ## Development
 
